@@ -1,14 +1,16 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
+// core/src/lib.rs
+use anyhow::Result;
+
+/// Generic edits the front-end will pass in.
+#[derive(Debug, Default)]
+pub struct Edits {
+    pub coins: Option<u32>,
+    // add more fields later...
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
+/// Everything a game-specific module must provide.
+pub trait SaveGame {
+    fn from_bytes(data: &[u8]) -> Result<Self> where Self: Sized;
+    fn patch(&mut self, edits: &Edits);
+    fn to_bytes(&self) -> Result<Vec<u8>>;
 }
