@@ -1,0 +1,6 @@
+[workspace]
+members = [
+    "core",   # parser/encryption library
+    "cli",    # command-line front-end
+]
+resolver = "2"
